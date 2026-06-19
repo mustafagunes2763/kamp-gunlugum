@@ -56,7 +56,7 @@
   .day-plate::before{ content:""; position:absolute; inset:-1px; border-radius: 18px; padding: 1px; background: var(--grad-brand); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.55; pointer-events:none; }
   .day-plate .plate-label{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--violet); text-transform: uppercase; }
   .day-plate .plate-number{ font-family: var(--font-display); font-weight: 800; font-size: 36px; line-height: 1.15; background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
-  .day-plate .plate-number span.zero{ opacity: 0.3; color: var(--ink-faint); -webkit-text-fill-color: var(--ink-faint); } /* Sıfırlar silik */
+  .day-plate .plate-number span.zero{ opacity: 0.3; color: var(--ink-faint); -webkit-text-fill-color: var(--ink-faint); } 
 
   .stack{ display:flex; flex-direction:column; gap: 14px; }
   section.card{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; backdrop-filter: blur(18px); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
@@ -74,7 +74,7 @@
 
   .input-shell{ position:relative; display:flex; align-items:center; background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
   .input-shell:focus-within{ border-color: rgba(140,124,255,0.55); background: rgba(140,124,255,0.06); box-shadow: 0 0 0 4px rgba(140,124,255,0.12); }
-  .input-shell input[type="number"], .input-shell input[type="text"], .input-shell input[type="date"]{ appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-mono); font-weight: 600; font-size: 17px; padding: 13px 14px; font-variant-numeric: tabular-nums; }
+  .input-shell input[type="number"], .input-shell input[type="text"], .input-shell input[type="date"]{ appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-mono); font-weight: 600; font-size: 17px; padding: 13px 14px; font-variant-numeric: tabular-nums; transition: color 0.2s; }
   .input-shell input::placeholder{ color: var(--ink-faint); font-weight: 400; }
   .input-shell.accent-fire{ border-left: 3px solid var(--coral); }
   .input-shell.accent-acid{ border-left: 3px solid var(--mint); }
@@ -155,23 +155,23 @@
   .drawer-link .link-text .link-sub{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.02em; }
   .drawer-foot{ margin-top: auto; padding: 14px 8px 4px; border-top: 1px solid var(--line-soft); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); text-align:center; }
 
-  /* TAM SAYFA STATS PANELİ (YENİ EKLENDİ) */
+  /* TAM SAYFA STATS PANELİ */
   .stats-panel{ 
     position:fixed; 
     top:0; left:0; 
     height:100%; width: 100%; 
-    max-width: 100%; /* Ekranı tam kaplaması için */
+    max-width: 100%;
     background: var(--bg); 
     background-image: radial-gradient(circle at 90% -8%, rgba(140,124,255,0.18), transparent 42%), radial-gradient(circle at 0% 22%, rgba(91,141,255,0.12), transparent 38%); 
-    z-index: 100; /* Her şeyin üstünde */
-    transform: translateY(100%); /* Aşağıdan yukarı gelsin */
+    z-index: 100; 
+    transform: translateY(100%); 
     transition: transform .35s cubic-bezier(.4,0,.2,1); 
     overflow-y: auto; 
     -webkit-overflow-scrolling: touch; 
   }
   .stats-panel.is-active{ transform: translateY(0); }
   .stats-inner{ 
-    max-width: 480px; /* Tablette ortada durmasını sağlar */
+    max-width: 480px; 
     margin: 0 auto; 
     padding: calc(var(--safe-top) + 20px) 16px calc(var(--safe-bottom) + 28px); 
   }
@@ -197,6 +197,7 @@
   .legend-dot.dot-violet{ background: var(--violet); }
   .legend-dot.dot-coral{ background: var(--coral); }
   .legend-dot.dot-blue{ background: var(--violet-2); }
+  .legend-dot.dot-dim{ background: var(--ink-faint); }
   .chart-wrap{ position: relative; width: 100%; height: 200px; margin-top: 12px; }
   .chart-wrap canvas{ width: 100% !important; height: 100% !important; }
   .stat-chips{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
@@ -228,7 +229,7 @@
       <span class="link-text"><span class="link-title">Grafikler &amp; İstatistikler</span><span class="link-sub">Sistem verilerin</span></span>
     </a>
   </div>
-  <div class="drawer-foot">Kamp Defteri · Sürüm 4.2</div>
+  <div class="drawer-foot">Kamp Defteri · Sürüm 5.0</div>
 </nav>
 
 <!-- TAM SAYFA GRAFİK PANELİ -->
@@ -242,6 +243,7 @@
       <button class="stats-close" id="statsCloseBtn" type="button">✕</button>
     </div>
 
+    <!-- HAFTALIK / AYLIK BUTONLARI -->
     <div class="range-toggle" id="rangeToggle" data-range="weekly">
       <div class="toggle-pill"></div>
       <div class="toggle-option is-active" data-value="weekly">Haftalık</div>
@@ -249,14 +251,35 @@
     </div>
 
     <div class="stats-stack">
-      <!-- Uyku Trendi -->
+      
+      <!-- YENİ: ADIM TRENDİ -->
       <section class="card">
         <div class="card-head">
-          <div class="tag"><span class="dot"></span><h2>Uyku Trendi</h2></div>
+          <div class="tag"><span class="dot" style="background: var(--mint); box-shadow: 0 0 10px rgba(61,220,151,0.7);"></span><h2>Adım Trendi</h2></div>
           <span class="hint live" id="loadingStatus">Yükleniyor...</span>
         </div>
         <div class="chart-legend">
-          <span class="legend-item"><span class="legend-dot dot-violet"></span>Uyku Süresi (Saat)</span>
+          <span class="legend-item"><span class="legend-dot dot-mint"></span>Adım Sayısı</span>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrap"><canvas id="stepsChart"></canvas></div>
+          <div class="stat-chips">
+            <div class="stat-chip"><span class="chip-label">Ortalama</span><span class="chip-value" id="stepsAvg">—</span></div>
+            <div class="stat-chip"><span class="chip-label">Maksimum</span><span class="chip-value" id="stepsMax">—</span></div>
+            <div class="stat-chip"><span class="chip-label">Toplam</span><span class="chip-value" id="stepsTotal">—</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- UYKU TRENDİ (STACKED - KATMANLI) -->
+      <section class="card">
+        <div class="card-head">
+          <div class="tag"><span class="dot"></span><h2>Uyku Trendi</h2></div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot dot-violet"></span>Derin</span>
+          <span class="legend-item"><span class="legend-dot dot-coral"></span>REM</span>
+          <span class="legend-item"><span class="legend-dot dot-blue"></span>Hafif</span>
         </div>
         <div class="card-body">
           <div class="chart-wrap"><canvas id="sleepChart"></canvas></div>
@@ -351,9 +374,9 @@
           <div class="field">
             <label>Uyku Süresi <span class="unit">SA/DK</span></label>
             <div class="input-shell accent-blue" style="display:flex; padding-right:12px;">
-              <input type="number" placeholder="7" id="sleepHours" min="0" max="24" oninput="limitInput(this, 24)" style="text-align:center; padding:13px 4px;">
+              <input type="number" placeholder="7" id="sleepHours" min="0" max="24" oninput="limitInput(this, 24); checkSleepLimits();" style="text-align:center; padding:13px 4px;">
               <span style="color:var(--ink-dim); font-size:12px; font-weight:600;">sa</span>
-              <input type="number" placeholder="30" id="sleepMins" min="0" max="59" oninput="limitInput(this, 59)" style="text-align:center; padding:13px 4px;">
+              <input type="number" placeholder="30" id="sleepMins" min="0" max="59" oninput="limitInput(this, 59); checkSleepLimits();" style="text-align:center; padding:13px 4px;">
               <span style="color:var(--ink-dim); font-size:12px; font-weight:600;">dk</span>
             </div>
           </div>
@@ -361,18 +384,18 @@
           <div class="field">
             <label>Derin Uyku <span class="unit">SA/DK</span></label>
             <div class="input-shell accent-violet" style="display:flex; padding-right:12px;">
-              <input type="number" placeholder="1" id="deepSleepHours" min="0" max="24" oninput="limitInput(this, 24)" style="text-align:center; padding:13px 4px;">
+              <input type="number" placeholder="1" id="deepSleepHours" min="0" max="24" oninput="limitInput(this, 24); checkSleepLimits();" style="text-align:center; padding:13px 4px;">
               <span style="color:var(--ink-dim); font-size:12px; font-weight:600;">sa</span>
-              <input type="number" placeholder="30" id="deepSleepMins" min="0" max="59" oninput="limitInput(this, 59)" style="text-align:center; padding:13px 4px;">
+              <input type="number" placeholder="30" id="deepSleepMins" min="0" max="59" oninput="limitInput(this, 59); checkSleepLimits();" style="text-align:center; padding:13px 4px;">
               <span style="color:var(--ink-dim); font-size:12px; font-weight:600;">dk</span>
             </div>
           </div>
           <div class="field">
             <label>REM Uykusu <span class="unit">SA/DK</span></label>
             <div class="input-shell accent-coral" style="display:flex; padding-right:12px;">
-              <input type="number" placeholder="2" id="remSleepHours" min="0" max="24" oninput="limitInput(this, 24)" style="text-align:center; padding:13px 4px;">
+              <input type="number" placeholder="2" id="remSleepHours" min="0" max="24" oninput="limitInput(this, 24); checkSleepLimits();" style="text-align:center; padding:13px 4px;">
               <span style="color:var(--ink-dim); font-size:12px; font-weight:600;">sa</span>
-              <input type="number" placeholder="11" id="remSleepMins" min="0" max="59" oninput="limitInput(this, 59)" style="text-align:center; padding:13px 4px;">
+              <input type="number" placeholder="11" id="remSleepMins" min="0" max="59" oninput="limitInput(this, 59); checkSleepLimits();" style="text-align:center; padding:13px 4px;">
               <span style="color:var(--ink-dim); font-size:12px; font-weight:600;">dk</span>
             </div>
           </div>
@@ -444,15 +467,34 @@
   </div>
 
   <div class="save-zone"><button class="btn-save" id="saveBtn" type="button">⛺ Günü Kaydet</button><div class="save-sub">Google Sheets'e otomatik yazılır</div></div>
-  <footer class="camp-footer"><span class="stamp">Kamp Defteri · Sürüm 4.2</span></footer>
+  <footer class="camp-footer"><span class="stamp">Kamp Defteri · Sürüm 5.0</span></footer>
 </div>
 
 <script>
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwTF3ap5pMnommaAM5VPiCQeHVEC-U5wt4T4VpUV-wWNMmkTAf-GGf7K0faxvyr7pQO/exec";
 
+  // Temel Sınır Kontrolü
   function limitInput(el, maxVal) {
     if (el.value !== "" && parseInt(el.value) > maxVal) el.value = maxVal;
     if (el.value !== "" && parseInt(el.value) < 0) el.value = 0;
+  }
+
+  // UYKU GÜVENLİK DUVARI (Derin+REM Toplamı Geçemez)
+  function checkSleepLimits() {
+    const tMins = (parseInt(document.getElementById('sleepHours').value)||0)*60 + (parseInt(document.getElementById('sleepMins').value)||0);
+    const dMins = (parseInt(document.getElementById('deepSleepHours').value)||0)*60 + (parseInt(document.getElementById('deepSleepMins').value)||0);
+    const rMins = (parseInt(document.getElementById('remSleepHours').value)||0)*60 + (parseInt(document.getElementById('remSleepMins').value)||0);
+
+    const warnEls = [
+      document.getElementById('deepSleepHours'), document.getElementById('deepSleepMins'),
+      document.getElementById('remSleepHours'), document.getElementById('remSleepMins')
+    ];
+
+    if (tMins > 0 && (dMins + rMins > tMins)) {
+        warnEls.forEach(el => el.style.color = 'var(--coral)'); // Hata varsa Kırmızı yap
+    } else {
+        warnEls.forEach(el => el.style.color = ''); // Düzelirse rengi geri al
+    }
   }
 
   const dayNote = document.getElementById('dayNote');
@@ -474,7 +516,7 @@
   calInInput.addEventListener("input", updateCalorieBalance);
   calOutInput.addEventListener("input", updateCalorieBalance);
 
-  // GÜVENLİ TARİH VE DÜZELTİLMİŞ SAYAÇ
+  // Tarih İşlemleri
   const logDateInput = document.getElementById("logDate");
   const displayDate = document.getElementById("displayDate");
   const campDayNumber = document.getElementById("campDayNumber");
@@ -490,13 +532,10 @@
     if (diffDays < 1) diffDays = 0;
     
     let htmlStr = "";
-    if (diffDays < 10) {
-      htmlStr = '<span class="zero">00</span>' + diffDays;
-    } else if (diffDays < 100) {
-      htmlStr = '<span class="zero">0</span>' + diffDays;
-    } else {
-      htmlStr = diffDays;
-    }
+    if (diffDays < 10) htmlStr = '<span class="zero">00</span>' + diffDays;
+    else if (diffDays < 100) htmlStr = '<span class="zero">0</span>' + diffDays;
+    else htmlStr = diffDays;
+    
     campDayNumber.innerHTML = htmlStr;
   }
 
@@ -543,7 +582,7 @@
     overlay.classList.remove('is-active');
     menuBtn.classList.remove('is-open');
     statsPanel.classList.add('is-active');
-    document.body.style.overflow = 'hidden'; // Arka plan kaymasını önler
+    document.body.style.overflow = 'hidden'; 
     
     if(!window.chartsLoaded) {
       loadDashboardData();
@@ -557,9 +596,37 @@
   statsLink.addEventListener('click', openStats);
   statsClose.addEventListener('click', closeStats);
 
+  // Haftalık/Aylık Toggle Olayı
+  window.currentChartRange = 7; // Varsayılan 7 gün
+  const rangeToggle = document.getElementById('rangeToggle');
+  if(rangeToggle){
+    rangeToggle.addEventListener('click', function(e){
+      const opt = e.target.closest('.toggle-option');
+      if(!opt) return;
+      const value = opt.dataset.value;
+      rangeToggle.setAttribute('data-range', value);
+      rangeToggle.querySelectorAll('.toggle-option').forEach(function(o){ o.classList.toggle('is-active', o === opt); });
+      
+      // Aralığı güncelle ve grafikleri baştan çiz
+      window.currentChartRange = (value === 'monthly') ? 30 : 7;
+      loadDashboardData();
+    });
+  }
+
   // Veri Kaydetme
   const saveBtn = document.getElementById("saveBtn");
   saveBtn.addEventListener("click", () => {
+    
+    // KAYIT ÖNCESİ UYKU KONTROLÜ
+    const tMins = (parseInt(document.getElementById('sleepHours').value)||0)*60 + (parseInt(document.getElementById('sleepMins').value)||0);
+    const dMins = (parseInt(document.getElementById('deepSleepHours').value)||0)*60 + (parseInt(document.getElementById('deepSleepMins').value)||0);
+    const rMins = (parseInt(document.getElementById('remSleepHours').value)||0)*60 + (parseInt(document.getElementById('remSleepMins').value)||0);
+    
+    if (tMins > 0 && (dMins + rMins > tMins)) {
+        alert("Kanka, Derin Uyku ve REM'in toplamı Toplam Uykuyu geçemez! Lütfen düzelt.");
+        return; // İşlemi iptal et
+    }
+
     saveBtn.innerText = "⏳ Kaydediliyor...";
     saveBtn.disabled = true;
 
@@ -601,10 +668,19 @@
   });
 
   // ============================================
-  // CHART.JS OKUMA VE ÇİZİM MOTORU
+  // CHART.JS OKUMA VE ÇİZİM MOTORU (GÜNCELLENDİ)
   // ============================================
+  const parseSleepStr = (str) => {
+    const match = (str || "").match(/(\d+)sa\s*(\d+)dk/);
+    if (match) return parseInt(match[1]) + (parseInt(match[2]) / 60);
+    return parseFloat(str) || 0;
+  };
+
   async function loadDashboardData() {
     const statusText = document.getElementById('loadingStatus');
+    statusText.innerText = "Yükleniyor...";
+    statusText.style.color = "var(--ink-faint)";
+
     try {
       const response = await fetch(WEB_APP_URL);
       if(!response.ok) throw new Error("Ağ hatası");
@@ -615,9 +691,16 @@
         rows = rows.slice(1);
       }
 
+      // HAFTALIK / AYLIK FİLTRESİ
+      if (rows.length > window.currentChartRange) {
+         rows = rows.slice(-window.currentChartRange);
+      }
+
       const labels = [];
-      const sleepData = [], weightData = [], fatData = [], calInData = [], calOutData = [];
-      let totalSleep = 0, maxSleep = 0, minSleep = 999, totalCalIn = 0, totalCalOut = 0;
+      const stepsData = [], weightData = [], fatData = [], calInData = [], calOutData = [];
+      const sDeep = [], sRem = [], sLight = [];
+      let totalSleep = 0, maxSleep = 0, minSleep = 999;
+      let totalSteps = 0, maxSteps = 0, totalCalIn = 0, totalCalOut = 0;
 
       rows.forEach(row => {
         if(!row[0]) return;
@@ -625,16 +708,29 @@
         const dateObj = new Date(row[0]);
         labels.push(dateObj.toLocaleDateString('tr-TR', {day: 'numeric', month: 'short'}) !== "Invalid Date" ? dateObj.toLocaleDateString('tr-TR', {day: 'numeric', month: 'short'}) : row[0]);
 
-        let sleepHrs = 0;
-        const sleepMatch = (row[5] || "").match(/(\d+)sa\s*(\d+)dk/);
-        if (sleepMatch) sleepHrs = parseInt(sleepMatch[1]) + (parseInt(sleepMatch[2]) / 60);
-        else sleepHrs = parseFloat(row[5]) || 0;
-        
-        sleepData.push(sleepHrs);
-        if(sleepHrs > 0) {
-          totalSleep += sleepHrs;
-          if(sleepHrs > maxSleep) maxSleep = sleepHrs;
-          if(sleepHrs < minSleep) minSleep = sleepHrs;
+        // Adımlar
+        let stp = parseInt(row[4]) || 0;
+        stepsData.push(stp);
+        if(stp > 0) {
+            totalSteps += stp;
+            if(stp > maxSteps) maxSteps = stp;
+        }
+
+        // Katmanlı Uyku Verileri
+        let totalHrs = parseSleepStr(row[5]);
+        let deepHrs = parseSleepStr(row[7]);
+        let remHrs = parseSleepStr(row[8]);
+        let lightHrs = totalHrs - deepHrs - remHrs;
+        if(lightHrs < 0) lightHrs = 0; // Hata koruması
+
+        sDeep.push(deepHrs);
+        sRem.push(remHrs);
+        sLight.push(lightHrs);
+
+        if(totalHrs > 0) {
+          totalSleep += totalHrs;
+          if(totalHrs > maxSleep) maxSleep = totalHrs;
+          if(totalHrs < minSleep) minSleep = totalHrs;
         }
 
         weightData.push(parseFloat(row[2]) || null);
@@ -648,11 +744,21 @@
         totalCalOut += cout;
       });
 
-      const validDays = sleepData.filter(x => x > 0).length || 1;
+      // --- İSTATİSTİKLERİ YAZDIRMA ---
+      
+      // Adım
+      const validSteps = stepsData.filter(x => x > 0).length || 1;
+      document.getElementById('stepsAvg').innerText = Math.round(totalSteps / validSteps).toLocaleString('tr-TR');
+      document.getElementById('stepsMax').innerText = maxSteps.toLocaleString('tr-TR');
+      document.getElementById('stepsTotal').innerText = totalSteps.toLocaleString('tr-TR');
+
+      // Uyku
+      const validDays = sDeep.filter((_, i) => (sDeep[i]+sRem[i]+sLight[i]) > 0).length || 1;
       document.getElementById('sleepAvg').innerText = formatHrs(totalSleep / validDays);
       document.getElementById('sleepMax').innerText = formatHrs(maxSleep === 0 ? 0 : maxSleep);
       document.getElementById('sleepMin').innerText = formatHrs(minSleep === 999 ? 0 : minSleep);
 
+      // Kilo
       const validWeights = weightData.filter(x => x !== null);
       const currentWeight = validWeights.length > 0 ? validWeights[validWeights.length - 1] : 0;
       const firstWeight = validWeights.length > 0 ? validWeights[0] : 0;
@@ -666,6 +772,7 @@
       const validFats = fatData.filter(x => x !== null);
       document.getElementById('bodyFatCurrent').innerText = validFats.length > 0 ? "%" + validFats[validFats.length - 1] : "—";
 
+      // Kalori
       const calDays = calInData.filter(x => x > 0).length || 1;
       const avgIn = Math.round(totalCalIn / calDays);
       const avgOut = Math.round(totalCalOut / calDays);
@@ -673,18 +780,41 @@
       document.getElementById('calorieAvgOut').innerText = avgOut + " kcal";
       document.getElementById('calorieAvgNet').innerText = (avgIn - avgOut) + " kcal";
 
+      // --- GRAFİKLERİ ÇİZ ---
       Chart.defaults.color = '#9499B3';
       Chart.defaults.font.family = "'JetBrains Mono', monospace";
       const commonOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } } };
 
+      if(window.stepChart) window.stepChart.destroy();
       if(window.sChart) window.sChart.destroy();
       if(window.wChart) window.wChart.destroy();
       if(window.cChart) window.cChart.destroy();
 
+      // Yeni Adım Grafiği
+      window.stepChart = new Chart(document.getElementById('stepsChart'), {
+        type: 'bar',
+        data: { labels: labels, datasets: [{ label: 'Adım', data: stepsData, backgroundColor: '#3DDC97', borderRadius: 6 }] },
+        options: commonOptions
+      });
+
+      // Efsanevi Stacked Uyku Grafiği
       window.sChart = new Chart(document.getElementById('sleepChart'), {
         type: 'bar',
-        data: { labels: labels, datasets: [{ label: 'Uyku (Saat)', data: sleepData, backgroundColor: '#8C7CFF', borderRadius: 6 }] },
-        options: commonOptions
+        data: { 
+          labels: labels, 
+          datasets: [
+            { label: 'Derin Uyku', data: sDeep, backgroundColor: '#8C7CFF' }, // Mor
+            { label: 'REM Uykusu', data: sRem, backgroundColor: '#FF7A9C' },  // Pembe
+            { label: 'Hafif Uyku', data: sLight, backgroundColor: '#5B8DFF', borderRadius: { topLeft: 6, topRight: 6 } } // Mavi
+          ] 
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+          scales: {
+            x: { stacked: true, grid: { display: false } },
+            y: { stacked: true, beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+          }
+        }
       });
 
       window.wChart = new Chart(document.getElementById('weightChart'), {
