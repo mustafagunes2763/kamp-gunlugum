@@ -42,7 +42,7 @@
   html, body{ background: var(--bg); color: var(--ink); font-family: var(--font-mono); overscroll-behavior-y: none; }
   body{ min-height: 100vh; padding-top: var(--safe-top); padding-bottom: calc(var(--safe-bottom) + 28px); background-image: radial-gradient(circle at 12% -8%, rgba(140,124,255,0.22), transparent 42%), radial-gradient(circle at 105% 18%, rgba(91,141,255,0.16), transparent 38%), radial-gradient(circle at 50% 100%, rgba(61,220,151,0.07), transparent 45%); background-attachment: fixed; }
   .hazard-strip{ height: 3px; width: 100%; background: var(--grad-brand); opacity: 0.85; }
-  .app{ max-width: 480px; margin: 0 auto; padding: 0 16px; }
+  .app{ max-width: 480px; margin: 0 auto; padding: 0 16px; transition: filter 0.3s ease; }
 
   header.camp-header{ padding: 26px 4px 20px; display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
   .camp-id{ display:flex; flex-direction:column; gap: 7px; }
@@ -51,11 +51,12 @@
   .date-nav-btn { background: transparent; border: none; color: var(--violet); font-size: 20px; cursor: pointer; padding: 0 6px; display: flex; align-items: center; justify-content: center; }
   .date-nav-btn:active { opacity: 0.5; }
   .camp-id .date-value{ font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); min-width: 110px; text-align: center; }
+  
   .day-plate{ flex-shrink:0; background: var(--panel-solid); border: 1px solid var(--line); border-radius: 18px; padding: 10px 18px 12px; text-align:center; position:relative; min-width: 104px; backdrop-filter: blur(20px); box-shadow: 0 12px 30px rgba(91,80,220,0.18); }
   .day-plate::before{ content:""; position:absolute; inset:-1px; border-radius: 18px; padding: 1px; background: var(--grad-brand); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.55; pointer-events:none; }
   .day-plate .plate-label{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--violet); text-transform: uppercase; }
   .day-plate .plate-number{ font-family: var(--font-display); font-weight: 800; font-size: 36px; line-height: 1.15; background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
-  .day-plate .plate-number span.zero{ opacity: 0.45; }
+  .day-plate .plate-number span.zero{ opacity: 0.3; color: var(--ink-faint); -webkit-text-fill-color: var(--ink-faint); } /* Sıfırlar silik */
 
   .stack{ display:flex; flex-direction:column; gap: 14px; }
   section.card{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; backdrop-filter: blur(18px); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
@@ -126,7 +127,7 @@
   footer.camp-footer{ margin-top: 24px; padding: 18px 4px 6px; text-align:center; border-top: 1px solid var(--line-soft); }
   footer.camp-footer .stamp{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; color: var(--ink-faint); text-transform: uppercase; }
 
-  /* DRAWER MENU / STATS PANEL STYLES */
+  /* DRAWER MENU STYLES */
   .menu-btn{ appearance:none; border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(18px); border-radius: 12px; width: 42px; height: 42px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 4px; cursor:pointer; transition: border-color .18s ease, background .18s ease; }
   .menu-btn:hover{ border-color: rgba(140,124,255,0.45); background: rgba(140,124,255,0.08); }
   .menu-btn span{ display:block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .22s ease, opacity .22s ease; }
@@ -135,15 +136,14 @@
   .menu-btn.is-open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
 
   .header-top{ display:flex; align-items:center; gap: 12px; padding: 4px 4px 0; }
-  .menu-overlay, .stats-overlay{ position:fixed; inset:0; background: rgba(5,6,12,0.55); backdrop-filter: blur(2px); opacity:0; pointer-events:none; transition: opacity .25s ease; z-index: 40; }
-  .stats-overlay{ z-index: 60; }
-  .menu-overlay.is-active, .stats-overlay.is-active{ opacity:1; pointer-events:auto; }
+  .menu-overlay{ position:fixed; inset:0; background: rgba(5,6,12,0.55); backdrop-filter: blur(2px); opacity:0; pointer-events:none; transition: opacity .25s ease; z-index: 40; }
+  .menu-overlay.is-active{ opacity:1; pointer-events:auto; }
 
   .drawer{ position:fixed; top:0; left:0; height:100%; width: min(78vw, 300px); background: var(--bg-2); border-right: 1px solid var(--line); box-shadow: 24px 0 60px rgba(0,0,0,0.4); transform: translateX(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); z-index: 50; padding: calc(var(--safe-top) + 22px) 18px 22px; display:flex; flex-direction:column; }
   .drawer.is-active{ transform: translateX(0); }
   .drawer-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 26px; padding: 0 4px; }
   .drawer-head .drawer-title{ font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--ink); }
-  .drawer-close, .stats-close{ appearance:none; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-dim); width: 32px; height: 32px; border-radius: 10px; font-size: 16px; line-height: 1; cursor:pointer; }
+  .drawer-close{ appearance:none; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-dim); width: 32px; height: 32px; border-radius: 10px; font-size: 16px; line-height: 1; cursor:pointer; }
   .drawer-nav{ display:flex; flex-direction:column; gap: 6px; }
   .drawer-link{ display:flex; align-items:center; gap: 13px; padding: 13px 12px; border-radius: var(--radius-sm); text-decoration:none; color: var(--ink-dim); border: 1px solid transparent; transition: background .18s ease, border-color .18s ease, color .18s ease; }
   .drawer-link:hover{ background: var(--panel-2); }
@@ -155,14 +155,31 @@
   .drawer-link .link-text .link-sub{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.02em; }
   .drawer-foot{ margin-top: auto; padding: 14px 8px 4px; border-top: 1px solid var(--line-soft); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); text-align:center; }
 
-  /* STATS PANEL */
-  .stats-panel{ position:fixed; top:0; right:0; height:100%; width: 100%; max-width: 480px; background: var(--bg); background-image: radial-gradient(circle at 90% -8%, rgba(140,124,255,0.18), transparent 42%), radial-gradient(circle at 0% 22%, rgba(91,141,255,0.12), transparent 38%); border-left: 1px solid var(--line); box-shadow: -24px 0 60px rgba(0,0,0,0.4); transform: translateX(100%); transition: transform .32s cubic-bezier(.4,0,.2,1); z-index: 70; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-  .stats-panel.is-active{ transform: translateX(0); }
-  .stats-inner{ padding: calc(var(--safe-top) + 20px) 16px calc(var(--safe-bottom) + 28px); }
+  /* TAM SAYFA STATS PANELİ (YENİ EKLENDİ) */
+  .stats-panel{ 
+    position:fixed; 
+    top:0; left:0; 
+    height:100%; width: 100%; 
+    max-width: 100%; /* Ekranı tam kaplaması için */
+    background: var(--bg); 
+    background-image: radial-gradient(circle at 90% -8%, rgba(140,124,255,0.18), transparent 42%), radial-gradient(circle at 0% 22%, rgba(91,141,255,0.12), transparent 38%); 
+    z-index: 100; /* Her şeyin üstünde */
+    transform: translateY(100%); /* Aşağıdan yukarı gelsin */
+    transition: transform .35s cubic-bezier(.4,0,.2,1); 
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
+  }
+  .stats-panel.is-active{ transform: translateY(0); }
+  .stats-inner{ 
+    max-width: 480px; /* Tablette ortada durmasını sağlar */
+    margin: 0 auto; 
+    padding: calc(var(--safe-top) + 20px) 16px calc(var(--safe-bottom) + 28px); 
+  }
   .stats-head{ display:flex; align-items:center; justify-content:space-between; padding: 4px 4px 22px; }
   .stats-head .stats-title-group{ display:flex; flex-direction:column; gap: 4px; }
   .stats-head .eyebrow{ font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-faint); text-transform: uppercase; }
   .stats-head .stats-title{ font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--ink); letter-spacing: -0.01em; }
+  .stats-close{ appearance:none; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-dim); width: 32px; height: 32px; border-radius: 10px; font-size: 16px; line-height: 1; cursor:pointer; }
   
   .range-toggle{ display:flex; align-items:center; background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: 14px; padding: 4px; margin-bottom: 18px; position: relative; }
   .range-toggle .toggle-option{ flex: 1; text-align:center; padding: 10px 0; font-family: var(--font-display); font-weight: 600; font-size: 13px; color: var(--ink-faint); border-radius: 10px; cursor:pointer; position: relative; z-index: 2; transition: color .25s ease; user-select:none; }
@@ -211,10 +228,10 @@
       <span class="link-text"><span class="link-title">Grafikler &amp; İstatistikler</span><span class="link-sub">Sistem verilerin</span></span>
     </a>
   </div>
-  <div class="drawer-foot">Kamp Defteri · Sürüm 4.1</div>
+  <div class="drawer-foot">Kamp Defteri · Sürüm 4.2</div>
 </nav>
 
-<div class="stats-overlay" id="statsOverlay"></div>
+<!-- TAM SAYFA GRAFİK PANELİ -->
 <section class="stats-panel" id="statsPanel" aria-label="Grafikler ve İstatistikler">
   <div class="stats-inner">
     <div class="stats-head">
@@ -232,6 +249,7 @@
     </div>
 
     <div class="stats-stack">
+      <!-- Uyku Trendi -->
       <section class="card">
         <div class="card-head">
           <div class="tag"><span class="dot"></span><h2>Uyku Trendi</h2></div>
@@ -250,6 +268,7 @@
         </div>
       </section>
 
+      <!-- Kilo ve Yağ Oranı -->
       <section class="card">
         <div class="card-head">
           <div class="tag"><span class="dot"></span><h2>Kilo ve Yağ Oranı</h2></div>
@@ -268,6 +287,7 @@
         </div>
       </section>
 
+      <!-- Kalori Dengesi -->
       <section class="card">
         <div class="card-head">
           <div class="tag"><span class="dot"></span><h2>Kalori Dengesi</h2></div>
@@ -289,7 +309,7 @@
   </div>
 </section>
 
-<div class="app">
+<div class="app" id="mainApp">
   <div class="header-top">
     <button class="menu-btn" id="menuBtn" type="button"><span></span><span></span><span></span></button>
   </div>
@@ -311,6 +331,7 @@
   </header>
 
   <div class="stack">
+    <!-- SABAH TARTISI -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot"></span><h2>Sabah Tartısı</h2></div><span class="hint">Mi Scale</span></div>
       <div class="card-body">
@@ -321,6 +342,7 @@
       </div>
     </section>
 
+    <!-- AKTİVİTE & TOPARLANMA -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot" style="background: var(--violet-2); box-shadow: 0 0 10px rgba(91,141,255,0.7);"></span><h2>Aktivite & Toparlanma</h2></div><span class="hint">Huawei Health</span></div>
       <div class="card-body">
@@ -358,6 +380,7 @@
       </div>
     </section>
 
+    <!-- KALORİ -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot"></span><h2>Kalori</h2></div><span class="hint">KCAL</span></div>
       <div class="card-body">
@@ -369,6 +392,7 @@
       </div>
     </section>
 
+    <!-- MAKROLAR -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot"></span><h2>Makrolar</h2></div><span class="hint">GRAM</span></div>
       <div class="card-body">
@@ -380,6 +404,7 @@
       </div>
     </section>
 
+    <!-- SUPPLEMENTLER -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot"></span><h2>Takviyeler</h2></div><span class="hint">Bugün</span></div>
       <div class="card-body">
@@ -391,6 +416,7 @@
       </div>
     </section>
 
+    <!-- ANTRENMAN -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot"></span><h2>Antrenman</h2></div><span class="hint">Tip</span></div>
       <div class="card-body">
@@ -410,6 +436,7 @@
       </div>
     </section>
 
+    <!-- GÜNÜN NOTU -->
     <section class="card">
       <div class="card-head"><div class="tag"><span class="dot"></span><h2>Günün Notu</h2></div><span class="hint" id="noteCount">0 / 280</span></div>
       <div class="card-body"><div class="note-shell"><textarea id="dayNote" maxlength="280" placeholder="Bugün nasıl geçti? Enerji, uyku, ağrı, motivasyon..."></textarea></div></div>
@@ -417,7 +444,7 @@
   </div>
 
   <div class="save-zone"><button class="btn-save" id="saveBtn" type="button">⛺ Günü Kaydet</button><div class="save-sub">Google Sheets'e otomatik yazılır</div></div>
-  <footer class="camp-footer"><span class="stamp">Kamp Defteri · Sürüm 4.1</span></footer>
+  <footer class="camp-footer"><span class="stamp">Kamp Defteri · Sürüm 4.2</span></footer>
 </div>
 
 <script>
@@ -447,7 +474,7 @@
   calInInput.addEventListener("input", updateCalorieBalance);
   calOutInput.addEventListener("input", updateCalorieBalance);
 
-  // GÜVENLİ TARİH FONKSİYONU (Saat Dilimi Hatalarını Önler)
+  // GÜVENLİ TARİH VE DÜZELTİLMİŞ SAYAÇ
   const logDateInput = document.getElementById("logDate");
   const displayDate = document.getElementById("displayDate");
   const campDayNumber = document.getElementById("campDayNumber");
@@ -458,13 +485,19 @@
     
     displayDate.innerText = selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
     
-    // Kamp başlangıcı: 19 Haziran 2026 (Aylar 0'dan başlar)
     const baseDate = new Date(2026, 5, 19); 
     let diffDays = Math.round((selectedDate.getTime() - baseDate.getTime()) / (1000 * 3600 * 24)) + 1;
     if (diffDays < 1) diffDays = 0;
     
-    const formattedDay = diffDays.toString().padStart(3, '0');
-    campDayNumber.innerHTML = formattedDay.substring(0,2) + '<span class="zero">' + formattedDay.substring(2) + '</span>';
+    let htmlStr = "";
+    if (diffDays < 10) {
+      htmlStr = '<span class="zero">00</span>' + diffDays;
+    } else if (diffDays < 100) {
+      htmlStr = '<span class="zero">0</span>' + diffDays;
+    } else {
+      htmlStr = diffDays;
+    }
+    campDayNumber.innerHTML = htmlStr;
   }
 
   function shiftDate(days) {
@@ -492,7 +525,6 @@
   const statsLink = document.getElementById('statsLink');
   const homeLink = document.getElementById('homeLink');
   const statsPanel = document.getElementById('statsPanel');
-  const statsOverlay = document.getElementById('statsOverlay');
   const statsClose = document.getElementById('statsCloseBtn');
 
   function toggleMenu(){
@@ -511,7 +543,7 @@
     overlay.classList.remove('is-active');
     menuBtn.classList.remove('is-open');
     statsPanel.classList.add('is-active');
-    statsOverlay.classList.add('is-active');
+    document.body.style.overflow = 'hidden'; // Arka plan kaymasını önler
     
     if(!window.chartsLoaded) {
       loadDashboardData();
@@ -520,11 +552,10 @@
   }
   function closeStats(){
     statsPanel.classList.remove('is-active');
-    statsOverlay.classList.remove('is-active');
+    document.body.style.overflow = '';
   }
   statsLink.addEventListener('click', openStats);
   statsClose.addEventListener('click', closeStats);
-  statsOverlay.addEventListener('click', closeStats);
 
   // Veri Kaydetme
   const saveBtn = document.getElementById("saveBtn");
