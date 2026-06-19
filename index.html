@@ -11,9 +11,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ============================================
-     TOKENS
-     ============================================ */
   :root{
     --bg:        #0A0B0D;
     --panel:     #15171B;
@@ -22,96 +19,31 @@
     --ink:       #ECEDEE;
     --ink-dim:   #8B8F96;
     --ink-faint: #555960;
-
     --fire:      #FF4F1F;
-    --fire-dim:  #7A2B14;
     --acid:      #C8E063;
-    --acid-dim:  #5C6630;
     --blue:      #4FA8FF;
-
     --radius:    14px;
     --radius-sm: 8px;
-
     --font-display: 'Oswald', sans-serif;
     --font-mono:    'JetBrains Mono', monospace;
-
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
-
   *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-
-  html, body{
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-mono);
-    overscroll-behavior-y: none;
-  }
-
-  body{
-    min-height: 100vh;
-    padding-top: var(--safe-top);
-    padding-bottom: calc(var(--safe-bottom) + 28px);
-    background-image:
-      radial-gradient(circle at 15% 0%, rgba(255,79,31,0.10), transparent 45%),
-      radial-gradient(circle at 100% 30%, rgba(79,168,255,0.05), transparent 40%);
-    background-attachment: fixed;
-  }
-
-  .hazard-strip{
-    height: 6px;
-    width: 100%;
-    background: repeating-linear-gradient(
-      135deg,
-      var(--fire) 0px, var(--fire) 10px,
-      #000 10px, #000 20px
-    );
-    opacity: 0.9;
-  }
-
-  .app{
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-
-  /* ============================================
-     HEADER / DAY COUNTER
-     ============================================ */
-  header.camp-header{
-    padding: 22px 4px 18px;
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap: 16px;
-  }
-
+  html, body{ background: var(--bg); color: var(--ink); font-family: var(--font-mono); overscroll-behavior-y: none; }
+  body{ min-height: 100vh; padding-top: var(--safe-top); padding-bottom: calc(var(--safe-bottom) + 28px); background-image: radial-gradient(circle at 15% 0%, rgba(255,79,31,0.10), transparent 45%), radial-gradient(circle at 100% 30%, rgba(79,168,255,0.05), transparent 40%); background-attachment: fixed; }
+  .hazard-strip{ height: 6px; width: 100%; background: repeating-linear-gradient(135deg, var(--fire) 0px, var(--fire) 10px, #000 10px, #000 20px); opacity: 0.9; }
+  .app{ max-width: 480px; margin: 0 auto; padding: 0 16px; }
+  header.camp-header{ padding: 22px 4px 18px; display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
   .camp-id{ display:flex; flex-direction:column; gap: 6px; }
   .camp-id .eyebrow{ font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-faint); text-transform: uppercase; }
   .camp-id .date-row{ display:flex; align-items:baseline; gap: 10px; }
   .camp-id .date-value{ font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: 0.01em; color: var(--ink); text-transform: uppercase; }
-
-  .day-plate{
-    flex-shrink:0;
-    background: linear-gradient(180deg, var(--panel-2), var(--panel));
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    padding: 8px 14px 10px;
-    text-align:center;
-    position:relative;
-    min-width: 100px;
-  }
-  .day-plate::before{
-    content:""; position:absolute; inset:0; border-radius: var(--radius-sm);
-    border: 1px solid rgba(255,79,31,0.35); pointer-events:none;
-  }
+  .day-plate{ flex-shrink:0; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 14px 10px; text-align:center; position:relative; min-width: 100px; }
+  .day-plate::before{ content:""; position:absolute; inset:0; border-radius: var(--radius-sm); border: 1px solid rgba(255,79,31,0.35); pointer-events:none; }
   .day-plate .plate-label{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; color: var(--fire); text-transform: uppercase; }
   .day-plate .plate-number{ font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
   .day-plate .plate-number span.zero{ color: var(--ink-faint); }
-
-  /* ============================================
-     SECTION CARD SYSTEM
-     ============================================ */
   .stack{ display:flex; flex-direction:column; gap: 14px; }
   section.card{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; }
   .card-head{ display:flex; align-items:center; justify-content:space-between; padding: 14px 16px 0; }
@@ -120,43 +52,26 @@
   .card-head h2{ font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
   .card-head .hint{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.04em; }
   .card-body{ padding: 14px 16px 18px; }
-
-  /* ============================================
-     FIELD PRIMITIVES
-     ============================================ */
   .field{ display:flex; flex-direction:column; gap:6px; }
   .field label{ font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); display:flex; align-items:center; justify-content:space-between; }
   .field label .unit{ color: var(--ink-faint); font-size: 9px; letter-spacing: 0.04em; }
-
-  .input-shell{
-    position:relative; display:flex; align-items:center;
-    background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm);
-    transition: border-color .15s ease, box-shadow .15s ease;
-  }
+  .input-shell{ position:relative; display:flex; align-items:center; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); transition: border-color .15s ease, box-shadow .15s ease; }
   .input-shell:focus-within{ border-color: var(--fire); box-shadow: 0 0 0 3px rgba(255,79,31,0.14); }
-  .input-shell input{
-    appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none;
-    color: var(--ink); font-family: var(--font-mono); font-weight: 600; font-size: 17px; padding: 12px 12px; font-variant-numeric: tabular-nums;
-  }
+  .input-shell input{ appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-mono); font-weight: 600; font-size: 17px; padding: 12px 12px; font-variant-numeric: tabular-nums; }
   .input-shell input::placeholder{ color: var(--ink-faint); font-weight: 400; }
   .input-shell input[type="date"]{ color: var(--ink); font-size: 14px; }
   .input-shell input[type="date"]::-webkit-calendar-picker-indicator{ filter: invert(0.7); opacity: 0.8; }
-
   .input-shell.accent-fire{ border-left: 3px solid var(--fire); }
   .input-shell.accent-acid{ border-left: 3px solid var(--acid); }
   .input-shell.accent-blue{ border-left: 3px solid var(--blue); }
-
-  /* Layouts */
   .weight-row, .calorie-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .weight-row{ grid-template-columns: 1.3fr 1fr; }
   .weight-row .input-shell input{ font-size: 22px; font-weight: 700; }
-
   .calorie-row .field label .arrow-in{ color: var(--acid); }
   .calorie-row .field label .arrow-out{ color: var(--fire); }
   .calorie-balance{ margin-top: 12px; display:flex; align-items:center; justify-content:space-between; background: var(--panel-2); border: 1px dashed var(--line); border-radius: var(--radius-sm); padding: 10px 12px; }
   .calorie-balance .cb-label{ font-size: 10px; letter-spacing: 0.12em; text-transform:uppercase; color: var(--ink-faint); }
   .calorie-balance .cb-value{ font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--ink-dim); }
-
   .macro-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .macro-field .input-shell{ border-left: 3px solid var(--macro-color, var(--ink-faint)); }
   .macro-field[data-macro="protein"]{ --macro-color: var(--acid); }
@@ -164,8 +79,6 @@
   .macro-field[data-macro="fat"]{ --macro-color: var(--fire); }
   .macro-field label{ justify-content:flex-start; gap:5px; }
   .macro-field label .swatch{ width:6px; height:6px; border-radius:50%; background: var(--macro-color); }
-
-  /* Supplements */
   .supp-list{ display:flex; flex-direction:column; gap: 8px; }
   .supp-chip{ display:flex; align-items:center; gap: 12px; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; cursor:pointer; }
   .supp-chip input[type="checkbox"]{ appearance:none; width: 22px; height: 22px; flex-shrink:0; border: 1.5px solid var(--ink-faint); border-radius: 5px; background: var(--bg); position:relative; }
@@ -176,22 +89,16 @@
   .supp-chip .supp-name{ font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: 0.02em; color: var(--ink); text-transform: uppercase; }
   .supp-chip .supp-sub{ font-size: 10px; color: var(--ink-faint); }
   .supp-chip .supp-icon{ font-size: 18px; width: 28px; text-align:center; flex-shrink:0; opacity: 0.85; }
-
-  /* Select & Textarea */
   .select-shell{ position:relative; background: var(--panel-2); border: 1px solid var(--line); border-left: 3px solid var(--fire); border-radius: var(--radius-sm); }
   .select-shell select{ appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 15px; text-transform: uppercase; padding: 13px 36px 13px 12px; }
   .select-shell select option{ background: var(--panel); color: var(--ink); }
   .select-shell::after{ content:"▾"; position:absolute; right: 14px; top:50%; transform: translateY(-50%); color: var(--fire); font-size: 12px; pointer-events:none; }
-
   .note-shell{ background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); overflow:hidden; }
   .note-shell textarea{ width:100%; min-height: 96px; background: transparent; border:none; outline:none; resize: vertical; color: var(--ink); font-family: var(--font-mono); font-size: 14px; padding: 12px; }
-
-  /* Save Button */
   .save-zone{ margin-top: 18px; padding-bottom: 4px; }
   .btn-save{ width:100%; border:none; border-radius: var(--radius-sm); background: linear-gradient(180deg, #FF6A3D, var(--fire)); color: #1A0700; font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px; display:flex; align-items:center; justify-content:center; gap: 10px; box-shadow: 0 8px 24px rgba(255,79,31,0.28), inset 0 1px 0 rgba(255,255,255,0.25); cursor:pointer; }
   .btn-save:active{ transform: translateY(1px); box-shadow: 0 4px 14px rgba(255,79,31,0.24), inset 0 1px 0 rgba(255,255,255,0.2); }
   .save-sub{ text-align:center; margin-top: 10px; font-size: 10px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
-
   footer.camp-footer{ margin-top: 22px; padding: 16px 4px 6px; text-align:center; border-top: 1px solid var(--line); }
   footer.camp-footer .stamp{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--ink-faint); text-transform: uppercase; }
 </style>
@@ -218,7 +125,6 @@
   </header>
 
   <div class="stack">
-
     <!-- SABAH TARTISI -->
     <section class="card">
       <div class="card-head">
@@ -239,7 +145,7 @@
       </div>
     </section>
 
-    <!-- AKTİVİTE & TOPARLANMA (Eklenen Kısım) -->
+    <!-- AKTİVİTE & TOPARLANMA -->
     <section class="card">
       <div class="card-head">
         <div class="tag">
@@ -252,15 +158,11 @@
         <div class="calorie-row">
           <div class="field">
             <label>Adım <span class="unit">SAYI</span></label>
-            <div class="input-shell accent-acid">
-              <input type="number" inputmode="numeric" placeholder="0" id="stepsValue">
-            </div>
+            <div class="input-shell accent-acid"><input type="number" inputmode="numeric" placeholder="0" id="stepsValue"></div>
           </div>
           <div class="field">
             <label>Uyku <span class="unit">SAAT</span></label>
-            <div class="input-shell accent-blue">
-              <input type="number" inputmode="decimal" step="0.1" placeholder="0.0" id="sleepValue">
-            </div>
+            <div class="input-shell accent-blue"><input type="number" inputmode="decimal" step="0.1" placeholder="0.0" id="sleepValue"></div>
           </div>
         </div>
       </div>
@@ -325,23 +227,17 @@
           <label class="supp-chip">
             <input type="checkbox" id="suppBoneBroth">
             <span class="supp-icon">🦴</span>
-            <span class="supp-info">
-              <span class="supp-name">Kemik Suyu</span><span class="supp-sub">Eklem & bağ dokusu</span>
-            </span>
+            <span class="supp-info"><span class="supp-name">Kemik Suyu</span><span class="supp-sub">Eklem & bağ dokusu</span></span>
           </label>
           <label class="supp-chip">
             <input type="checkbox" id="suppOmega3">
             <span class="supp-icon">🐟</span>
-            <span class="supp-info">
-              <span class="supp-name">Omega 3</span><span class="supp-sub">Toparlanma & iltihap kontrolü</span>
-            </span>
+            <span class="supp-info"><span class="supp-name">Omega 3</span><span class="supp-sub">Toparlanma & iltihap kontrolü</span></span>
           </label>
           <label class="supp-chip">
             <input type="checkbox" id="suppCreatine">
             <span class="supp-icon">⚡</span>
-            <span class="supp-info">
-              <span class="supp-name">Kreatin</span><span class="supp-sub">Güç & performans</span>
-            </span>
+            <span class="supp-info"><span class="supp-name">Kreatin</span><span class="supp-sub">Güç & performans</span></span>
           </label>
         </div>
       </div>
@@ -380,7 +276,6 @@
         </div>
       </div>
     </section>
-
   </div>
 
   <div class="save-zone">
@@ -394,9 +289,7 @@
 
 </div>
 
-<!-- JAVASCRIPT BEYNİ -->
 <script>
-  // 1. KAMP GÜNÜ VE TARİH SİSTEMİ (Başlangıç: 19 Haziran 2026)
   const baseDate = new Date("2026-06-19T00:00:00");
   const logDateInput = document.getElementById("logDate");
   const displayDate = document.getElementById("displayDate");
@@ -418,7 +311,6 @@
   logDateInput.addEventListener("change", updateDateAndCampDay);
   updateDateAndCampDay();
 
-  // 2. NET DENGE HESAPLAYICI
   const calInInput = document.getElementById("caloriesIn");
   const calOutInput = document.getElementById("caloriesOut");
   const calBalanceDisplay = document.getElementById("calorieBalance");
@@ -427,27 +319,18 @@
     const inVal = parseInt(calInInput.value) || 0;
     const outVal = parseInt(calOutInput.value) || 0;
     const balance = inVal - outVal;
-
-    if (balance > 0) {
-      calBalanceDisplay.innerText = "+" + balance + " kcal";
-      calBalanceDisplay.style.color = "var(--acid)";
-    } else if (balance < 0) {
-      calBalanceDisplay.innerText = balance + " kcal";
-      calBalanceDisplay.style.color = "var(--fire)";
-    } else {
-      calBalanceDisplay.innerText = "0 kcal";
-      calBalanceDisplay.style.color = "var(--ink-dim)";
-    }
+    if (balance > 0) { calBalanceDisplay.innerText = "+" + balance + " kcal"; calBalanceDisplay.style.color = "var(--acid)"; } 
+    else if (balance < 0) { calBalanceDisplay.innerText = balance + " kcal"; calBalanceDisplay.style.color = "var(--fire)"; } 
+    else { calBalanceDisplay.innerText = "0 kcal"; calBalanceDisplay.style.color = "var(--ink-dim)"; }
   }
 
   calInInput.addEventListener("input", updateCalorieBalance);
   calOutInput.addEventListener("input", updateCalorieBalance);
 
-  // 3. GOOGLE SHEETS VERİ GÖNDERİMİ (FETCH)
   const saveBtn = document.getElementById("saveBtn");
 
   saveBtn.addEventListener("click", () => {
-    // BURAYA SENİN LİNKİNİ OTOMATİK EKLEDİM KANKA!
+    // EN SON DÜZELTTİĞİMİZ KISIM: Hem link senin, hem gönderim ayarı kusursuz!
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz2sLxIz3PJBge7KNR4J9c1twk7gJtFxzE0DPhM6AahNc5Yh0M6ZjCsjT9EQpSTCsJy/exec";
 
     saveBtn.innerText = "⏳ Kaydediliyor...";
@@ -477,24 +360,19 @@
 
     fetch(WEB_APP_URL, {
       method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
     })
-    .then(() => {
+    .then(response => response.json())
+    .then(data => {
       saveBtn.innerText = "✅ Başarıyla Kaydedildi";
-      setTimeout(() => {
-        saveBtn.innerText = "⛺ Günü Kaydet";
-        saveBtn.disabled = false;
-      }, 2000);
+      setTimeout(() => { saveBtn.innerText = "⛺ Günü Kaydet"; saveBtn.disabled = false; }, 2000);
     })
     .catch((error) => {
-      alert("Hata oluştu: " + error);
-      saveBtn.innerText = "⛺ Günü Kaydet";
-      saveBtn.disabled = false;
+      saveBtn.innerText = "❌ Hata (Bağlantı)";
+      setTimeout(() => { saveBtn.innerText = "⛺ Günü Kaydet"; saveBtn.disabled = false; }, 2000);
     });
   });
 </script>
 </body>
 </html>
-
