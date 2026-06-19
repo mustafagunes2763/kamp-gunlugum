@@ -3,177 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#0A0B0D">
+<meta name="theme-color" content="#0A0C14">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>KAMP / Günlük Rapor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:        #0A0B0D;
-    --panel:     #15171B;
-    --panel-2:   #1B1E23;
-    --line:      #2A2D33;
-    --ink:       #ECEDEE;
-    --ink-dim:   #8B8F96;
-    --ink-faint: #555960;
-    --fire:      #FF4F1F;
-    --acid:      #C8E063;
-    --blue:      #4FA8FF;
-    --radius:    14px;
-    --radius-sm: 8px;
-    --font-display: 'Oswald', sans-serif;
+    --bg:        #0A0C14;
+    --bg-2:      #0E1120;
+    --panel:     rgba(255,255,255,0.045);
+    --panel-2:   rgba(255,255,255,0.03);
+    --panel-solid: #141828;
+    --line:      rgba(255,255,255,0.09);
+    --line-soft: rgba(255,255,255,0.06);
+    --ink:       #F3F4FA;
+    --ink-dim:   #9499B3;
+    --ink-faint: #5C6180;
+    --violet:    #8C7CFF;
+    --violet-2:  #5B8DFF;
+    --mint:      #3DDC97;
+    --mint-dim:  #1F6B4C;
+    --coral:     #FF7A9C;
+    --grad-brand: linear-gradient(135deg, #8C7CFF 0%, #5B8DFF 100%);
+    --grad-mint:  linear-gradient(135deg, #3DDC97 0%, #29B7D8 100%);
+    --radius:    22px;
+    --radius-sm: 14px;
+    --font-display: 'Sora', sans-serif;
     --font-mono:    'JetBrains Mono', monospace;
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
   *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-  html, body{ background: var(--bg); color: var(--ink); font-family: var(--font-mono); overscroll-behavior-y: none; overflow-x: hidden; }
-  body{ min-height: 100vh; padding-top: var(--safe-top); padding-bottom: calc(var(--safe-bottom) + 28px); background-image: radial-gradient(circle at 15% 0%, rgba(255,79,31,0.10), transparent 45%), radial-gradient(circle at 100% 30%, rgba(79,168,255,0.05), transparent 40%); background-attachment: fixed; }
-  .hazard-strip{ height: 6px; width: 100%; background: repeating-linear-gradient(135deg, var(--fire) 0px, var(--fire) 10px, #000 10px, #000 20px); opacity: 0.9; position: sticky; top: 0; z-index: 100; }
+  html, body{ background: var(--bg); color: var(--ink); font-family: var(--font-mono); overscroll-behavior-y: none; }
+  body{ min-height: 100vh; padding-top: var(--safe-top); padding-bottom: calc(var(--safe-bottom) + 28px); background-image: radial-gradient(circle at 12% -8%, rgba(140,124,255,0.22), transparent 42%), radial-gradient(circle at 105% 18%, rgba(91,141,255,0.16), transparent 38%), radial-gradient(circle at 50% 100%, rgba(61,220,151,0.07), transparent 45%); background-attachment: fixed; }
+  .hazard-strip{ height: 3px; width: 100%; background: var(--grad-brand); opacity: 0.85; }
   .app{ max-width: 480px; margin: 0 auto; padding: 0 16px; }
   
-  /* --- HAMBURGER & HEADER --- */
-  header.camp-header{ padding: 22px 4px 18px; display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
-  .header-left { display: flex; align-items: flex-start; gap: 16px; }
-  
-  .menu-btn { display: flex; flex-direction: column; justify-content: space-between; width: 26px; height: 18px; cursor: pointer; margin-top: 4px; z-index: 10; }
-  .menu-btn .bar { height: 3px; width: 100%; background-color: var(--ink); border-radius: 3px; transition: all 0.3s ease; }
-  
-  .camp-id{ display:flex; flex-direction:column; gap: 6px; }
-  .camp-id .eyebrow{ font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-faint); text-transform: uppercase; }
+  header.camp-header{ padding: 26px 4px 20px; display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
+  .camp-id{ display:flex; flex-direction:column; gap: 7px; }
+  .camp-id .eyebrow{ font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-faint); text-transform: uppercase; }
   .camp-id .date-row{ display:flex; align-items:baseline; gap: 10px; }
-  .camp-id .date-value{ font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: 0.01em; color: var(--ink); text-transform: uppercase; }
-  .day-plate{ flex-shrink:0; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 14px 10px; text-align:center; position:relative; min-width: 100px; }
-  .day-plate::before{ content:""; position:absolute; inset:0; border-radius: var(--radius-sm); border: 1px solid rgba(255,79,31,0.35); pointer-events:none; }
-  .day-plate .plate-label{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; color: var(--fire); text-transform: uppercase; }
-  .day-plate .plate-number{ font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
-  .day-plate .plate-number span.zero{ color: var(--ink-faint); }
-
-  /* --- SIDEBAR MENU --- */
-  .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 998; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-  .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+  .camp-id .date-value{ font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; color: var(--ink); }
   
-  .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; background: var(--panel); border-right: 1px solid var(--line); z-index: 999; transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
-  .sidebar.active { left: 0; }
+  .day-plate{ flex-shrink:0; background: var(--panel-solid); border: 1px solid var(--line); border-radius: 18px; padding: 10px 18px 12px; text-align:center; position:relative; min-width: 104px; backdrop-filter: blur(20px); box-shadow: 0 12px 30px rgba(91,80,220,0.18); }
+  .day-plate::before{ content:""; position:absolute; inset:-1px; border-radius: 18px; padding: 1px; background: var(--grad-brand); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.55; pointer-events:none; }
+  .day-plate .plate-label{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--violet); text-transform: uppercase; }
+  .day-plate .plate-number{ font-family: var(--font-display); font-weight: 800; font-size: 36px; line-height: 1.15; background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .day-plate .plate-number span.zero{ opacity: 0.45; }
   
-  .sidebar-head { padding: 24px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; background: var(--bg); }
-  .sidebar-head h2 { font-family: var(--font-display); font-size: 16px; letter-spacing: 0.1em; color: var(--fire); margin: 0; }
-  .close-btn { background: none; border: none; color: var(--ink-dim); font-size: 24px; cursor: pointer; padding: 0; line-height: 1; }
-  
-  .sidebar-nav { padding: 20px 0; display: flex; flex-direction: column; gap: 8px; }
-  .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 16px 20px; color: var(--ink); text-decoration: none; font-family: var(--font-display); font-size: 15px; letter-spacing: 0.05em; text-transform: uppercase; border-left: 3px solid transparent; transition: background 0.2s; }
-  .sidebar-link:active { background: var(--panel-2); }
-  .sidebar-link.active { border-left-color: var(--acid); background: linear-gradient(90deg, rgba(200,224,99,0.1), transparent); color: var(--acid); }
-  .sidebar-link.disabled { color: var(--ink-faint); pointer-events: none; }
-  .sidebar-icon { font-size: 18px; }
-
-  /* --- OTHERS --- */
   .stack{ display:flex; flex-direction:column; gap: 14px; }
-  section.card{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; }
-  .card-head{ display:flex; align-items:center; justify-content:space-between; padding: 14px 16px 0; }
-  .card-head .tag{ display:flex; align-items:center; gap: 8px; }
-  .card-head .tag .dot{ width:7px; height:7px; border-radius:50%; background: var(--fire); box-shadow: 0 0 8px rgba(255,79,31,0.7); }
-  .card-head h2{ font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
-  .card-head .hint{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.04em; }
-  .card-body{ padding: 14px 16px 18px; }
-  .field{ display:flex; flex-direction:column; gap:6px; }
-  .field label{ font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); display:flex; align-items:center; justify-content:space-between; }
+  section.card{ background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; backdrop-filter: blur(18px); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+  .card-head{ display:flex; align-items:center; justify-content:space-between; padding: 16px 18px 0; }
+  .card-head .tag{ display:flex; align-items:center; gap: 9px; }
+  .card-head .tag .dot{ width:7px; height:7px; border-radius:50%; background: var(--grad-brand); box-shadow: 0 0 10px rgba(140,124,255,0.7); }
+  .card-head h2{ font-family: var(--font-display); font-weight: 600; font-size: 14px; letter-spacing: 0.01em; color: var(--ink); }
+  .card-head .hint{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
+  .card-body{ padding: 14px 18px 20px; }
+  
+  .field-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field label{ font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); display:flex; align-items:center; justify-content:space-between; }
   .field label .unit{ color: var(--ink-faint); font-size: 9px; letter-spacing: 0.04em; }
-  .input-shell{ position:relative; display:flex; align-items:center; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); transition: border-color .15s ease, box-shadow .15s ease; }
-  .input-shell:focus-within{ border-color: var(--fire); box-shadow: 0 0 0 3px rgba(255,79,31,0.14); }
-  .input-shell input{ appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-mono); font-weight: 600; font-size: 17px; padding: 12px 12px; font-variant-numeric: tabular-nums; }
+  
+  .input-shell{ position:relative; display:flex; align-items:center; background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+  .input-shell:focus-within{ border-color: rgba(140,124,255,0.55); background: rgba(140,124,255,0.06); box-shadow: 0 0 0 4px rgba(140,124,255,0.12); }
+  .input-shell input[type="number"], .input-shell input[type="text"], .input-shell input[type="date"]{ appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-mono); font-weight: 600; font-size: 17px; padding: 13px 14px; font-variant-numeric: tabular-nums; }
   .input-shell input::placeholder{ color: var(--ink-faint); font-weight: 400; }
   .input-shell input[type="date"]{ color: var(--ink); font-size: 14px; }
-  .input-shell input[type="date"]::-webkit-calendar-picker-indicator{ filter: invert(0.7); opacity: 0.8; }
-  .input-shell.accent-fire{ border-left: 3px solid var(--fire); }
-  .input-shell.accent-acid{ border-left: 3px solid var(--acid); }
-  .input-shell.accent-blue{ border-left: 3px solid var(--blue); }
-  .weight-row, .calorie-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .weight-row{ grid-template-columns: 1.3fr 1fr; }
-  .weight-row .input-shell input{ font-size: 22px; font-weight: 700; }
-  .calorie-row .field label .arrow-in{ color: var(--acid); }
-  .calorie-row .field label .arrow-out{ color: var(--fire); }
-  .calorie-balance{ margin-top: 12px; display:flex; align-items:center; justify-content:space-between; background: var(--panel-2); border: 1px dashed var(--line); border-radius: var(--radius-sm); padding: 10px 12px; }
-  .calorie-balance .cb-label{ font-size: 10px; letter-spacing: 0.12em; text-transform:uppercase; color: var(--ink-faint); }
+  .input-shell input[type="date"]::-webkit-calendar-picker-indicator{ filter: invert(0.85); opacity: 0.85; }
+  
+  .input-shell.accent-fire{ border-left: 3px solid var(--coral); }
+  .input-shell.accent-acid{ border-left: 3px solid var(--mint); }
+  .input-shell.accent-blue{ border-left: 3px solid var(--violet-2); }
+  .input-shell.accent-violet{ border-left: 3px solid var(--violet); }
+  
+  .weight-row{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 10px; }
+  .weight-row .input-shell input{ font-size: 23px; font-weight: 700; }
+  
+  .calorie-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; position:relative; }
+  .calorie-row .field label .arrow-in{ color: var(--mint); }
+  .calorie-row .field label .arrow-out{ color: var(--coral); }
+  .calorie-balance{ margin-top: 14px; display:flex; align-items:center; justify-content:space-between; background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .calorie-balance .cb-label{ font-size: 10px; letter-spacing: 0.1em; text-transform:uppercase; color: var(--ink-faint); }
   .calorie-balance .cb-value{ font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--ink-dim); }
+  
   .macro-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .macro-field .input-shell{ border-left: 3px solid var(--macro-color, var(--ink-faint)); }
-  .macro-field[data-macro="protein"]{ --macro-color: var(--acid); }
-  .macro-field[data-macro="carb"]{ --macro-color: var(--blue); }
-  .macro-field[data-macro="fat"]{ --macro-color: var(--fire); }
+  .macro-field[data-macro="protein"]{ --macro-color: var(--mint); }
+  .macro-field[data-macro="carb"]{ --macro-color: var(--violet-2); }
+  .macro-field[data-macro="fat"]{ --macro-color: var(--coral); }
   .macro-field label{ justify-content:flex-start; gap:5px; }
   .macro-field label .swatch{ width:6px; height:6px; border-radius:50%; background: var(--macro-color); }
+  
   .supp-list{ display:flex; flex-direction:column; gap: 8px; }
-  .supp-chip{ display:flex; align-items:center; gap: 12px; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; cursor:pointer; }
-  .supp-chip input[type="checkbox"]{ appearance:none; width: 22px; height: 22px; flex-shrink:0; border: 1.5px solid var(--ink-faint); border-radius: 5px; background: var(--bg); position:relative; }
-  .supp-chip input[type="checkbox"]:checked{ background: var(--acid); border-color: var(--acid); }
-  .supp-chip input[type="checkbox"]:checked::after{ content:""; position:absolute; left: 6px; top: 2px; width: 6px; height: 11px; border: solid var(--bg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-  .supp-chip:has(input:checked){ border-color: var(--acid-dim); background: linear-gradient(180deg, rgba(200,224,99,0.08), rgba(200,224,99,0.02)); }
+  .supp-chip{ display:flex; align-items:center; gap: 12px; background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); padding: 13px 15px; cursor:pointer; transition: border-color .18s ease, background .18s ease; }
+  .supp-chip input[type="checkbox"]{ appearance:none; -webkit-appearance:none; width: 22px; height: 22px; flex-shrink:0; border: 1.5px solid var(--ink-faint); border-radius: 7px; background: rgba(255,255,255,0.02); position:relative; cursor:pointer; transition: all .18s ease; }
+  .supp-chip input[type="checkbox"]:checked{ background: var(--grad-mint); border-color: transparent; }
+  .supp-chip input[type="checkbox"]:checked::after{ content:""; position:absolute; left: 6px; top: 2px; width: 6px; height: 11px; border: solid #07261B; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .supp-chip:has(input:checked){ border-color: rgba(61,220,151,0.35); background: linear-gradient(135deg, rgba(61,220,151,0.10), rgba(41,183,216,0.04)); }
   .supp-chip .supp-info{ display:flex; flex-direction:column; gap: 2px; flex:1; }
-  .supp-chip .supp-name{ font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: 0.02em; color: var(--ink); text-transform: uppercase; }
-  .supp-chip .supp-sub{ font-size: 10px; color: var(--ink-faint); }
-  .supp-chip .supp-icon{ font-size: 18px; width: 28px; text-align:center; flex-shrink:0; opacity: 0.85; }
-  .select-shell{ position:relative; background: var(--panel-2); border: 1px solid var(--line); border-left: 3px solid var(--fire); border-radius: var(--radius-sm); }
-  .select-shell select{ appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 15px; text-transform: uppercase; padding: 13px 36px 13px 12px; }
-  .select-shell select option{ background: var(--panel); color: var(--ink); }
-  .select-shell::after{ content:"▾"; position:absolute; right: 14px; top:50%; transform: translateY(-50%); color: var(--fire); font-size: 12px; pointer-events:none; }
-  .note-shell{ background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm); overflow:hidden; }
-  .note-shell textarea{ width:100%; min-height: 96px; background: transparent; border:none; outline:none; resize: vertical; color: var(--ink); font-family: var(--font-mono); font-size: 14px; padding: 12px; }
-  .save-zone{ margin-top: 18px; padding-bottom: 4px; }
-  .btn-save{ width:100%; border:none; border-radius: var(--radius-sm); background: linear-gradient(180deg, #FF6A3D, var(--fire)); color: #1A0700; font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px; display:flex; align-items:center; justify-content:center; gap: 10px; box-shadow: 0 8px 24px rgba(255,79,31,0.28), inset 0 1px 0 rgba(255,255,255,0.25); cursor:pointer; }
-  .btn-save:active{ transform: translateY(1px); box-shadow: 0 4px 14px rgba(255,79,31,0.24), inset 0 1px 0 rgba(255,255,255,0.2); }
-  .save-sub{ text-align:center; margin-top: 10px; font-size: 10px; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
-  footer.camp-footer{ margin-top: 22px; padding: 16px 4px 6px; text-align:center; border-top: 1px solid var(--line); }
-  footer.camp-footer .stamp{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--ink-faint); text-transform: uppercase; }
+  .supp-chip .supp-name{ font-family: var(--font-display); font-weight: 600; font-size: 14px; letter-spacing: 0; color: var(--ink); }
+  .supp-chip .supp-sub{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.02em; }
+  .supp-chip .supp-icon{ font-size: 19px; width: 30px; height: 30px; display:flex; align-items:center; justify-content:center; border-radius: 10px; background: rgba(255,255,255,0.04); flex-shrink:0; }
+  
+  .select-shell{ position:relative; background: var(--panel-2); border: 1px solid var(--line-soft); border-left: 3px solid var(--violet); border-radius: var(--radius-sm); }
+  .select-shell select{ appearance:none; -webkit-appearance:none; width:100%; background: transparent; border:none; outline:none; color: var(--ink); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0; padding: 14px 38px 14px 14px; }
+  .select-shell select option{ background: var(--panel-solid); color: var(--ink); }
+  .select-shell::after{ content:"▾"; position:absolute; right: 15px; top:50%; transform: translateY(-50%); color: var(--violet); font-size: 12px; pointer-events:none; }
+  
+  .note-shell{ background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); overflow:hidden; }
+  .note-shell textarea{ width:100%; min-height: 96px; background: transparent; border:none; outline:none; resize: vertical; color: var(--ink); font-family: var(--font-mono); font-size: 14px; line-height: 1.6; padding: 13px 14px; }
+  .note-shell textarea::placeholder{ color: var(--ink-faint); }
+  
+  .save-zone{ margin-top: 20px; padding-bottom: 4px; }
+  .btn-save{ width:100%; appearance:none; border:none; border-radius: 18px; background: var(--grad-brand); color: #0A0C14; font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: 0.01em; padding: 17px; display:flex; align-items:center; justify-content:center; gap: 10px; box-shadow: 0 14px 34px rgba(124,108,255,0.32), inset 0 1px 0 rgba(255,255,255,0.3); cursor:pointer;}
+  .btn-save:active{ transform: translateY(1px) scale(0.99); box-shadow: 0 8px 22px rgba(124,108,255,0.28), inset 0 1px 0 rgba(255,255,255,0.25); }
+  .save-sub{ text-align:center; margin-top: 12px; font-size: 10px; letter-spacing: 0.06em; color: var(--ink-faint); text-transform: uppercase; }
+  
+  footer.camp-footer{ margin-top: 24px; padding: 18px 4px 6px; text-align:center; border-top: 1px solid var(--line-soft); }
+  footer.camp-footer .stamp{ font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; color: var(--ink-faint); text-transform: uppercase; }
+  
+  /* MENU */
+  .menu-btn{ appearance:none; border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(18px); border-radius: 12px; width: 42px; height: 42px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 4px; cursor:pointer; transition: border-color .18s ease, background .18s ease; }
+  .menu-btn:hover{ border-color: rgba(140,124,255,0.45); background: rgba(140,124,255,0.08); }
+  .menu-btn span{ display:block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .22s ease, opacity .22s ease; }
+  .menu-btn.is-open span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .menu-btn.is-open span:nth-child(2){ opacity: 0; }
+  .menu-btn.is-open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+  .header-top{ display:flex; align-items:center; gap: 12px; padding: 4px 4px 0; }
+  .menu-overlay{ position:fixed; inset:0; background: rgba(5,6,12,0.55); backdrop-filter: blur(2px); opacity:0; pointer-events:none; transition: opacity .25s ease; z-index: 40; }
+  .menu-overlay.is-active{ opacity:1; pointer-events:auto; }
+  .drawer{ position:fixed; top:0; left:0; height:100%; width: min(78vw, 300px); background: var(--bg-2); border-right: 1px solid var(--line); box-shadow: 24px 0 60px rgba(0,0,0,0.4); transform: translateX(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); z-index: 50; padding: calc(var(--safe-top) + 22px) 18px 22px; display:flex; flex-direction:column; }
+  .drawer.is-active{ transform: translateX(0); }
+  .drawer-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 26px; padding: 0 4px; }
+  .drawer-head .drawer-title{ font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--ink); }
+  .drawer-close{ appearance:none; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-dim); width: 32px; height: 32px; border-radius: 10px; font-size: 16px; line-height: 1; cursor:pointer; }
+  .drawer-nav{ display:flex; flex-direction:column; gap: 6px; }
+  .drawer-link{ display:flex; align-items:center; gap: 13px; padding: 13px 12px; border-radius: var(--radius-sm); text-decoration:none; color: var(--ink-dim); border: 1px solid transparent; transition: background .18s ease, border-color .18s ease, color .18s ease; }
+  .drawer-link:hover{ background: var(--panel-2); }
+  .drawer-link.is-current{ background: linear-gradient(135deg, rgba(140,124,255,0.14), rgba(91,141,255,0.06)); border-color: rgba(140,124,255,0.3); color: var(--ink); }
+  .drawer-link .link-icon{ width: 34px; height: 34px; border-radius: 10px; background: var(--panel-2); display:flex; align-items:center; justify-content:center; font-size: 16px; flex-shrink:0; }
+  .drawer-link.is-current .link-icon{ background: var(--grad-brand); }
+  .drawer-link .link-text{ display:flex; flex-direction:column; gap: 1px; }
+  .drawer-link .link-text .link-title{ font-family: var(--font-display); font-weight: 600; font-size: 14px; }
+  .drawer-link .link-text .link-sub{ font-size: 10px; color: var(--ink-faint); letter-spacing: 0.02em; }
+  .drawer-foot{ margin-top: auto; padding: 14px 8px 4px; border-top: 1px solid var(--line-soft); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); text-align:center; }
 </style>
 </head>
 <body>
 
 <div class="hazard-strip"></div>
 
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-head">
-    <h2>KARARGAH</h2>
-    <button class="close-btn" id="closeBtn">×</button>
+<div class="menu-overlay" id="menuOverlay"></div>
+<nav class="drawer" id="drawer" aria-label="Ana menü">
+  <div class="drawer-head">
+    <span class="drawer-title">Menü</span>
+    <button class="drawer-close" id="drawerCloseBtn" type="button">✕</button>
   </div>
-  <nav class="sidebar-nav">
-    <a href="#" class="sidebar-link active">
-      <span class="sidebar-icon">📝</span> Günlük Rapor
+  <div class="drawer-nav">
+    <a href="#" class="drawer-link is-current">
+      <span class="link-icon">📝</span>
+      <span class="link-text"><span class="link-title">Günlük Giriş</span><span class="link-sub">Bugünün kaydı</span></span>
     </a>
-    <a href="#" class="sidebar-link disabled">
-      <span class="sidebar-icon">📊</span> Grafikler (Yakında)
+    <a href="#" class="drawer-link" id="statsLink">
+      <span class="link-icon">📊</span>
+      <span class="link-text"><span class="link-title">Grafikler (Yakında)</span><span class="link-sub">Haftalık Rapor</span></span>
     </a>
-    <a href="#" class="sidebar-link disabled">
-      <span class="sidebar-icon">⚙️</span> Ayarlar (Yakında)
-    </a>
-  </nav>
-</aside>
+  </div>
+  <div class="drawer-foot">Kamp Defteri · Sürüm 2.0</div>
+</nav>
 
 <div class="app">
+  <div class="header-top">
+    <button class="menu-btn" id="menuBtn" type="button">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 
   <header class="camp-header">
-    <div class="header-left">
-      <div class="menu-btn" id="menuBtn">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+    <div class="camp-id">
+      <span class="eyebrow">Operasyon Günlüğü</span>
+      <div class="date-row">
+        <span class="date-value" id="displayDate">19 Haziran</span>
       </div>
-      
-      <div class="camp-id">
-        <span class="eyebrow">Operasyon Günlüğü</span>
-        <div class="date-row">
-          <span class="date-value" id="displayDate">19 Haziran</span>
-        </div>
-        <div class="input-shell accent-fire" style="margin-top:4px; max-width:160px;">
-          <input type="date" id="logDate" value="2026-06-19">
-        </div>
+      <div class="input-shell accent-fire" style="margin-top:4px; max-width:160px;">
+        <input type="date" id="logDate" value="2026-06-19">
       </div>
     </div>
-    
     <div class="day-plate">
       <span class="plate-label">Kamp Gün</span>
       <div class="plate-number" id="campDayNumber">0<span class="zero">01</span></div>
@@ -181,6 +200,7 @@
   </header>
 
   <div class="stack">
+    <!-- SABAH TARTISI -->
     <section class="card">
       <div class="card-head">
         <div class="tag"><span class="dot"></span><h2>Sabah Tartısı</h2></div>
@@ -200,28 +220,39 @@
       </div>
     </section>
 
+    <!-- AKTİVİTE & TOPARLANMA (HUAWEI EKLENTİSİ) -->
     <section class="card">
       <div class="card-head">
-        <div class="tag">
-          <span class="dot" style="background: var(--blue); box-shadow: 0 0 8px rgba(79,168,255,0.7);"></span>
-          <h2>Aktivite & Toparlanma</h2>
-        </div>
+        <div class="tag"><span class="dot" style="background: var(--violet-2); box-shadow: 0 0 10px rgba(91,141,255,0.7);"></span><h2>Aktivite & Toparlanma</h2></div>
         <span class="hint">Huawei Health</span>
       </div>
       <div class="card-body">
-        <div class="calorie-row">
-          <div class="field">
+        <div class="field-grid">
+          <div class="field" style="grid-column: span 2;">
             <label>Adım <span class="unit">SAYI</span></label>
-            <div class="input-shell accent-acid"><input type="number" inputmode="numeric" placeholder="0" id="stepsValue"></div>
+            <div class="input-shell accent-acid"><input type="number" id="stepsValue"></div>
           </div>
           <div class="field">
-            <label>Uyku <span class="unit">SAAT</span></label>
-            <div class="input-shell accent-blue"><input type="number" inputmode="decimal" step="0.1" placeholder="0.0" id="sleepValue"></div>
+            <label>Uyku Süresi <span class="unit">SAAT</span></label>
+            <div class="input-shell accent-blue"><input type="number" step="0.1" placeholder="9.0" id="sleepValue"></div>
+          </div>
+          <div class="field">
+            <label>Uyku Puanı <span class="unit">PUAN</span></label>
+            <div class="input-shell accent-blue"><input type="number" placeholder="71" id="sleepScore"></div>
+          </div>
+          <div class="field">
+            <label>Derin Uyku <span class="unit">SAAT</span></label>
+            <div class="input-shell accent-violet"><input type="text" placeholder="1s 33d" id="deepSleep"></div>
+          </div>
+          <div class="field">
+            <label>REM Uykusu <span class="unit">SAAT</span></label>
+            <div class="input-shell accent-coral"><input type="text" placeholder="2s 11d" id="remSleep"></div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- KALORİ -->
     <section class="card">
       <div class="card-head">
         <div class="tag"><span class="dot"></span><h2>Kalori</h2></div>
@@ -245,6 +276,7 @@
       </div>
     </section>
 
+    <!-- MAKROLAR -->
     <section class="card">
       <div class="card-head">
         <div class="tag"><span class="dot"></span><h2>Makrolar</h2></div>
@@ -268,6 +300,7 @@
       </div>
     </section>
 
+    <!-- SUPPLEMENTLER -->
     <section class="card">
       <div class="card-head">
         <div class="tag"><span class="dot"></span><h2>Takviyeler</h2></div>
@@ -275,25 +308,14 @@
       </div>
       <div class="card-body">
         <div class="supp-list">
-          <label class="supp-chip">
-            <input type="checkbox" id="suppBoneBroth">
-            <span class="supp-icon">🦴</span>
-            <span class="supp-info"><span class="supp-name">Kemik Suyu</span><span class="supp-sub">Eklem & bağ dokusu</span></span>
-          </label>
-          <label class="supp-chip">
-            <input type="checkbox" id="suppOmega3">
-            <span class="supp-icon">🐟</span>
-            <span class="supp-info"><span class="supp-name">Omega 3</span><span class="supp-sub">Toparlanma & iltihap kontrolü</span></span>
-          </label>
-          <label class="supp-chip">
-            <input type="checkbox" id="suppCreatine">
-            <span class="supp-icon">⚡</span>
-            <span class="supp-info"><span class="supp-name">Kreatin</span><span class="supp-sub">Güç & performans</span></span>
-          </label>
+          <label class="supp-chip"><input type="checkbox" id="suppBoneBroth"><span class="supp-icon">🦴</span><span class="supp-info"><span class="supp-name">Kemik Suyu</span><span class="supp-sub">Eklem & bağ dokusu</span></span></label>
+          <label class="supp-chip"><input type="checkbox" id="suppOmega3"><span class="supp-icon">🐟</span><span class="supp-info"><span class="supp-name">Omega 3</span><span class="supp-sub">Toparlanma & iltihap kontrolü</span></span></label>
+          <label class="supp-chip"><input type="checkbox" id="suppCreatine"><span class="supp-icon">⚡</span><span class="supp-info"><span class="supp-name">Kreatin</span><span class="supp-sub">Güç & performans</span></span></label>
         </div>
       </div>
     </section>
 
+    <!-- ANTRENMAN -->
     <section class="card">
       <div class="card-head">
         <div class="tag"><span class="dot"></span><h2>Antrenman</h2></div>
@@ -315,9 +337,11 @@
       </div>
     </section>
 
+    <!-- GÜNÜN NOTU -->
     <section class="card">
       <div class="card-head">
         <div class="tag"><span class="dot"></span><h2>Günün Notu</h2></div>
+        <span class="hint" id="noteCount">0 / 280</span>
       </div>
       <div class="card-body">
         <div class="note-shell">
@@ -331,30 +355,33 @@
     <button class="btn-save" id="saveBtn" type="button">⛺ Günü Kaydet</button>
     <div class="save-sub">Google Sheets'e otomatik yazılır</div>
   </div>
-
-  <footer class="camp-footer">
-    <span class="stamp">Kamp Defteri · Sürüm 1.5</span>
-  </footer>
-
+  <footer class="camp-footer"><span class="stamp">Kamp Defteri · Sürüm 2.0</span></footer>
 </div>
 
 <script>
-  // --- MENU KONTROLLERİ ---
+  // Menü Animasyonları
   const menuBtn = document.getElementById('menuBtn');
-  const closeBtn = document.getElementById('closeBtn');
-  const sidebar = document.getElementById('sidebar');
-  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('menuOverlay');
+  const closeBtn = document.getElementById('drawerCloseBtn');
 
-  function toggleMenu() {
-    sidebar.classList.toggle('active');
-    sidebarOverlay.classList.toggle('active');
+  function toggleMenu(){
+    drawer.classList.toggle('is-active');
+    overlay.classList.toggle('is-active');
+    menuBtn.classList.toggle('is-open');
   }
-
   menuBtn.addEventListener('click', toggleMenu);
   closeBtn.addEventListener('click', toggleMenu);
-  sidebarOverlay.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
 
-  // --- TAKVİM VE HESAPLAMALAR ---
+  // Karakter Sayacı
+  const dayNote = document.getElementById('dayNote');
+  const noteCount = document.getElementById('noteCount');
+  dayNote.addEventListener('input', () => {
+    noteCount.innerText = `${dayNote.value.length} / 280`;
+  });
+
+  // Otomatik Gün ve Tarih Hesaplayıcı
   const baseDate = new Date("2026-06-19T00:00:00");
   const logDateInput = document.getElementById("logDate");
   const displayDate = document.getElementById("displayDate");
@@ -364,18 +391,15 @@
     const selectedDate = new Date(logDateInput.value + "T00:00:00");
     const options = { day: 'numeric', month: 'long' };
     displayDate.innerText = selectedDate.toLocaleDateString('tr-TR', options);
-
-    const diffTime = selectedDate.getTime() - baseDate.getTime();
-    let diffDays = Math.floor(diffTime / (1000 * 3600 * 24)) + 1;
+    let diffDays = Math.floor((selectedDate.getTime() - baseDate.getTime()) / (1000 * 3600 * 24)) + 1;
     if (diffDays < 1) diffDays = 0;
-
     const formattedDay = diffDays.toString().padStart(3, '0');
     campDayNumber.innerHTML = formattedDay.substring(0,2) + '<span class="zero">' + formattedDay.substring(2) + '</span>';
   }
-
   logDateInput.addEventListener("change", updateDateAndCampDay);
   updateDateAndCampDay();
 
+  // Net Kalori Dengesi Hesaplayıcı
   const calInInput = document.getElementById("caloriesIn");
   const calOutInput = document.getElementById("caloriesOut");
   const calBalanceDisplay = document.getElementById("calorieBalance");
@@ -384,18 +408,18 @@
     const inVal = parseInt(calInInput.value) || 0;
     const outVal = parseInt(calOutInput.value) || 0;
     const balance = inVal - outVal;
-    if (balance > 0) { calBalanceDisplay.innerText = "+" + balance + " kcal"; calBalanceDisplay.style.color = "var(--acid)"; } 
-    else if (balance < 0) { calBalanceDisplay.innerText = balance + " kcal"; calBalanceDisplay.style.color = "var(--fire)"; } 
+    if (balance > 0) { calBalanceDisplay.innerText = "+" + balance + " kcal"; calBalanceDisplay.style.color = "var(--mint)"; } 
+    else if (balance < 0) { calBalanceDisplay.innerText = balance + " kcal"; calBalanceDisplay.style.color = "var(--coral)"; } 
     else { calBalanceDisplay.innerText = "0 kcal"; calBalanceDisplay.style.color = "var(--ink-dim)"; }
   }
-
   calInInput.addEventListener("input", updateCalorieBalance);
   calOutInput.addEventListener("input", updateCalorieBalance);
 
-  // --- GOOGLE GÖNDERİMİ ---
+  // Google Sheets Veri Gönderimi (Motor)
   const saveBtn = document.getElementById("saveBtn");
 
   saveBtn.addEventListener("click", () => {
+    // BURAYA SENİN YENİ LİNKİNİ YAPIŞTIRDIM
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxOVdziIdK28LDQrhosFIiPtTVsYkE8iMy0nrVJCAtBR7CQ1IHSUaXG1AGSFr-fymF8/exec";
 
     saveBtn.innerText = "⏳ Kaydediliyor...";
@@ -413,6 +437,9 @@
       bodyFat: document.getElementById("bodyFatValue").value,
       steps: document.getElementById("stepsValue").value,
       sleep: document.getElementById("sleepValue").value,
+      sleepScore: document.getElementById("sleepScore").value,
+      deepSleep: document.getElementById("deepSleep").value,
+      remSleep: document.getElementById("remSleep").value,
       calIn: calInInput.value,
       calOut: calOutInput.value,
       protein: document.getElementById("macroProtein").value,
